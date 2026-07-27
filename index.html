@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Until You're Home 💕</title>
+<style>
+  :root{
+    --pink: #ff6fa5;
+    --pink-dark: #e0518a;
+    --peach: #ffd6c9;
+    --cream: #fff7f2;
+    --purple: #b28dff;
+    --text: #5a3d4d;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(180deg, #fff0f5 0%, #ffe4ec 40%, #fff7f2 100%);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ---------- floating hearts background ---------- */
+  #hearts{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .heart{
+    position: absolute;
+    bottom: -10%;
+    font-size: 24px;
+    opacity: 0.7;
+    animation: floatUp linear infinite;
+    user-select:none;
+  }
+  @keyframes floatUp{
+    0%{ transform: translateY(0) rotate(0deg); opacity: 0.8; }
+    100%{ transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+  }
+
+  section{
+    position: relative;
+    z-index: 1;
+    padding: 60px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ---------- hero / countdown ---------- */
+  .hero{
+    text-align: center;
+    padding-top: 70px;
+  }
+  .hero h1{
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    margin-bottom: 6px;
+    color: var(--pink-dark);
+  }
+  .hero p.subtitle{
+    font-size: 1.1rem;
+    margin-top: 0;
+    opacity: 0.85;
+  }
+  .flag-line{
+    font-size: 1rem;
+    margin-bottom: 30px;
+    opacity: 0.8;
+  }
+  .countdown{
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+  }
+  .countdown .box{
+    background: rgba(255,255,255,0.75);
+    border: 2px solid var(--pink);
+    border-radius: 18px;
+    padding: 18px 14px;
+    min-width: 80px;
+    box-shadow: 0 8px 20px rgba(224,81,138,0.15);
+    backdrop-filter: blur(4px);
+  }
+  .countdown .num{
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-weight: 700;
+    color: var(--pink-dark);
+    display:block;
+  }
+  .countdown .label{
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+  }
+  .arrived-msg{
+    display:none;
+    font-size: 1.6rem;
+    color: var(--pink-dark);
+    font-weight: 700;
+    margin: 30px 0;
+  }
+
+  /* ---------- section titles ---------- */
+  h2.section-title{
+    text-align: center;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: var(--pink-dark);
+    margin-bottom: 30px;
+  }
+  h2.section-title span{
+    display:block;
+    font-size: 0.9rem;
+    font-weight: 400;
+    opacity: 0.6;
+    margin-top: 4px;
+  }
+
+  /* ---------- letter ---------- */
+  .letter{
+    background: #fffaf7;
+    border-radius: 24px;
+    padding: 40px clamp(20px, 5vw, 50px);
+    box-shadow: 0 10px 30px rgba(178,141,255,0.15);
+    border: 2px dashed var(--purple);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    position: relative;
+  }
+  .letter::before{
+    content: "💌";
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    background: #fff7f2;
+    padding: 0 10px;
+  }
+  .signature{
+    text-align: right;
+    margin-top: 24px;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  /* ---------- timeline ---------- */
+  .timeline{
+    position: relative;
+    margin-top: 20px;
+    padding-left: 30px;
+    border-left: 3px solid var(--pink);
+  }
+  .timeline-item{
+    position: relative;
+    margin-bottom: 34px;
+    padding-left: 20px;
+  }
+  .timeline-item::before{
+    content: "💗";
+    position: absolute;
+    left: -43px;
+    top: -2px;
+    font-size: 1.2rem;
+    background: #fff7f2;
+  }
+  .timeline-item .date{
+    font-weight: 700;
+    color: var(--pink-dark);
+    font-size: 0.95rem;
+  }
+  .timeline-item .desc{
+    margin-top: 4px;
+    opacity: 0.9;
+  }
+
+  /* ---------- gallery ---------- */
+  .gallery{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  .gallery .photo{
+    aspect-ratio: 1 / 1;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--peach), var(--pink));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: white;
+    font-size: 0.85rem;
+    text-align:center;
+    padding: 10px;
+    box-shadow: 0 8px 18px rgba(224,81,138,0.2);
+    overflow: hidden;
+  }
+  .gallery .photo img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    border-radius: 18px;
+  }
+
+  /* ---------- surprise button ---------- */
+  .surprise{
+    text-align:center;
+  }
+  .surprise button{
+    background: var(--pink);
+    color: white;
+    border: none;
+    padding: 16px 34px;
+    font-size: 1rem;
+    border-radius: 40px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(224,81,138,0.35);
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .surprise button:hover{
+    background: var(--pink-dark);
+    transform: translateY(-2px) scale(1.03);
+  }
+  .surprise-message{
+    margin-top: 24px;
+    font-size: 1.2rem;
+    color: var(--pink-dark);
+    font-weight: 600;
+    display:none;
+  }
+
+  footer{
+    text-align:center;
+    padding: 40px 20px 60px;
+    font-size: 0.9rem;
+    opacity: 0.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pop-heart{
+    position: fixed;
+    pointer-events: none;
+    font-size: 20px;
+    z-index: 999;
+    animation: pop 0.8s ease-out forwards;
+  }
+  @keyframes pop{
+    0%{ transform: translateY(0) scale(1); opacity: 1; }
+    100%{ transform: translateY(-60px) scale(1.6); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="hearts"></div>
+
+<!-- ============================================================
+  HOW TO PERSONALIZE THIS PAGE (delete this comment whenever):
+  1. Search for "Jomar" style bracket text like [Her Name] and [Your Name] and replace with real names.
+  2. Rewrite the letter text inside the <div class="letter"> section.
+  3. Edit the timeline entries below (.timeline-item blocks) with your real memories/dates.
+  4. Add real photos: upload image files into a folder named "photos" next to this index.html,
+     then inside each <div class="photo"> replace the placeholder content with:
+     <img src="photos/yourfile.jpg" alt="description">
+  5. The countdown target date is set in the <script> tag near the bottom (targetDate variable).
+============================================================= -->
+
+<section class="hero">
+  <h1>Every day is one day closer 💕</h1>
+  <p class="subtitle">to holding you again</p>
+  <p class="flag-line">🇵🇭 Philippines → 🏡 Home &nbsp;|&nbsp; Landing day: <strong>August 17</strong></p>
+
+  <div class="countdown" id="countdown">
+    <div class="box"><span class="num" id="days">00</span><span class="label">Days</span></div>
+    <div class="box"><span class="num" id="hours">00</span><span class="label">Hours</span></div>
+    <div class="box"><span class="num" id="minutes">00</span><span class="label">Minutes</span></div>
+    <div class="box"><span class="num" id="seconds">00</span><span class="label">Seconds</span></div>
+  </div>
+
+  <div class="arrived-msg" id="arrivedMsg">She's home. 🎉 Welcome back, my love.</div>
+</section>
+
+<section>
+  <h2 class="section-title">A Little Letter For You <span>read it whenever you miss me</span></h2>
+  <div class="letter">
+    <p>My love,</p>
+    <p>
+      I know the distance feels long right now, and some days it feels longer than others.
+      But every single one of these days is bringing us closer to the moment I get to see you
+      again in person, hug you for real, and not just through a screen.
+    </p>
+    <p>
+      Until then, know that you're the first thing I think about in the morning and the last
+      thing on my mind before I fall asleep. Thank you for being patient with the distance,
+      for still choosing us every day, and for being the best part of my life even from
+      thousands of miles away.
+    </p>
+    <p>
+      Hang in there, [Her Name]. August 17th can't come fast enough.
+    </p>
+    <div class="signature">— [Your Name], counting down the days 🤍</div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Our Story So Far <span>edit these with your real memories</span></h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="date">The Day We Met</div>
+      <div class="desc">Replace this with how and when you two met.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">Our First Date</div>
+      <div class="desc">Replace this with a favorite memory from early on.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">The Day She Left for the Philippines</div>
+      <div class="desc">Replace this with the date and how you felt saying goodbye for now.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">August 17, 2026</div>
+      <div class="desc">The day she comes home. ✈️💕</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Photos of Us <span>swap these placeholders for your real pictures</span></h2>
+  <div class="gallery">
+    <div class="photo">📷<br>Add photo 1</div>
+    <div class="photo">📷<br>Add photo 2</div>
+    <div class="photo">📷<br>Add photo 3</div>
+    <div class="photo">📷<br>Add photo 4</div>
+    <div class="photo">📷<br>Add photo 5</div>
+    <div class="photo">📷<br>Add photo 6</div>
+  </div>
+</section>
+
+<section class="surprise">
+  <button id="surpriseBtn">Tap for a surprise 💗</button>
+  <div class="surprise-message" id="surpriseMessage">
+    I love you more than every mile between us. See you soon. 🥹💖
+  </div>
+</section>
+
+<footer>
+  Made with love, patience, and a countdown timer. 💌
+</footer>
+
+<script>
+  // ---- Countdown ----
+  // Change this date if you need to update the landing day/time.
+  const targetDate = new Date("2026-08-17T00:00:00");
+
+  function updateCountdown(){
+    const now = new Date();
+    const diff = targetDate - now;
+
+    if(diff <= 0){
+      document.getElementById("countdown").style.display = "none";
+      document.getElementById("arrivedMsg").style.display = "block";
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("days").textContent = String(days).padStart(2, "0");
+    document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+    document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+    document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ---- Floating hearts background ----
+  const heartsContainer = document.getElementById("hearts");
+  const heartEmojis = ["💗","💕","💖","💓","💞"];
+
+  function spawnHeart(){
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (14 + Math.random() * 20) + "px";
+    const duration = 8 + Math.random() * 8;
+    heart.style.animationDuration = duration + "s";
+    heartsContainer.appendChild(heart);
+    setTimeout(() => heart.remove(), duration * 1000);
+  }
+  setInterval(spawnHeart, 700);
+
+  // ---- Surprise button ----
+  const surpriseBtn = document.getElementById("surpriseBtn");
+  const surpriseMessage = document.getElementById("surpriseMessage");
+  surpriseBtn.addEventListener("click", () => {
+    surpriseMessage.style.display = "block";
+    for(let i = 0; i < 12; i++){
+      setTimeout(() => {
+        const pop = document.createElement("div");
+        pop.className = "pop-heart";
+        pop.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+        const rect = surpriseBtn.getBoundingClientRect();
+        pop.style.left = (rect.left + rect.width/2 + (Math.random()*100-50)) + "px";
+        pop.style.top = (rect.top + (Math.random()*20-10)) + "px";
+        document.body.appendChild(pop);
+        setTimeout(() => pop.remove(), 800);
+      }, i * 60);
+    }
+  });
+</script>
+
+</body>
+</html>
