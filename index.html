@@ -16,8 +16,8 @@
     --ink: #e9ebf7;
     --ink-soft: rgba(233,235,247,0.62);
     --accent: #a78bfa;
-    --accent-soft: rgba(167,139,250,0.18);
     --sky: #67c3f3;
+    --rose: #f2a9c9;
     --line: rgba(233,235,247,0.1);
   }
   *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -60,6 +60,12 @@
   @keyframes twinkle{
     0%, 100%{ opacity: 0.15; }
     50%{ opacity: 0.9; }
+  }
+  .heart-star{
+    position: absolute;
+    color: var(--rose);
+    text-shadow: 0 0 6px rgba(242,169,201,0.7);
+    animation: twinkle ease-in-out infinite;
   }
 
   main{
@@ -245,89 +251,94 @@
     color: var(--accent);
   }
 
-  /* ---------- timeline ---------- */
-  .timeline{
-    width: 100%;
-    max-width: 480px;
-    padding-left: 22px;
-    border-left: 2px solid var(--accent-soft);
+  /* ---------- reasons i love you ---------- */
+  .reason-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
   }
-  .timeline-item{ position: relative; margin-bottom: 24px; padding-left: 18px; }
-  .timeline-item:last-child{ margin-bottom: 0; }
-  .timeline-item::before{
-    content: "";
-    position: absolute;
-    left: -28px;
-    top: 4px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px var(--accent-soft);
+  .reason-heart{
+    font-size: 1.8rem;
+    color: var(--rose);
+    text-shadow: 0 0 16px rgba(242,169,201,0.5);
   }
-  .timeline-item .date{ font-weight: 800; color: var(--accent); font-size: 0.9rem; }
-  .timeline-item .desc{ margin-top: 3px; color: var(--ink-soft); font-size: 0.92rem; }
-
-  /* ---------- gallery ---------- */
-  .gallery{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    width: 100%;
-    max-width: 480px;
-  }
-  .gallery .photo{
-    aspect-ratio: 1/1;
-    border-radius: 14px;
-    background: linear-gradient(135deg, var(--accent), var(--sky));
+  .reason-text{
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+    min-height: 84px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #05060f;
-    font-weight: 700;
-    font-size: 0.72rem;
-    text-align: center;
-    padding: 6px;
-    overflow: hidden;
+    line-height: 1.55;
   }
-  .gallery .photo img{ width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
-
-  /* ---------- surprise ---------- */
-  .surprise-btn{
-    position: fixed;
-    right: calc(16px + env(safe-area-inset-right));
-    top: calc(16px + env(safe-area-inset-top));
-    z-index: 60;
-    background: var(--card);
-    border: 1px solid var(--card-line);
-    color: var(--accent);
+  .reason-btn{
+    background: linear-gradient(135deg, var(--accent), var(--rose));
+    color: #1a0f2e;
+    border: none;
     border-radius: 30px;
-    padding: 9px 14px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    backdrop-filter: blur(6px);
+    padding: 12px 26px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    font-family: inherit;
     cursor: pointer;
   }
-  .surprise-toast{
-    position: fixed;
-    left: 50%;
-    bottom: calc(30px + env(safe-area-inset-bottom));
-    transform: translate(-50%, 20px);
-    background: var(--ink);
-    color: #10132b;
-    padding: 14px 20px;
-    border-radius: 16px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    max-width: 300px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.35s ease;
-    z-index: 70;
+  .reason-count{
+    font-size: 0.75rem;
+    color: var(--ink-soft);
   }
-  .surprise-toast.show{ opacity: 1; transform: translate(-50%, 0); }
+
+  /* ---------- gallery (swipeable) ---------- */
+  .gallery{
+    display: flex;
+    overflow-x: auto;
+    gap: 14px;
+    width: 100%;
+    padding: 4px 0 6px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .gallery::-webkit-scrollbar{ display: none; }
+  .gallery .photo{
+    flex: 0 0 78%;
+    scroll-snap-align: center;
+    aspect-ratio: 4/5;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--accent), var(--rose));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a0f2e;
+    font-weight: 800;
+    font-size: 1rem;
+    text-align: center;
+    padding: 10px;
+    overflow: hidden;
+  }
+  .gallery .photo img{ width: 100%; height: 100%; object-fit: cover; border-radius: 22px; }
+  .gallery-dots{
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+  .gallery-dots .dot{
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(233,235,247,0.25);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .gallery-dots .dot.active{
+    background: var(--rose);
+    width: 18px;
+    border-radius: 5px;
+  }
 
   .footer-note{
     font-size: 0.75rem;
@@ -344,23 +355,20 @@
 
 <!-- ============================================================
   HOW TO PERSONALIZE THIS PAGE (delete this comment whenever):
-  1. "Jamella" and "Nick" appear in the letter/signature/timeline -- change if needed.
-  2. Edit the .timeline-item blocks with your real memories/dates.
+  1. "Jamella" and "Nick" appear in the letter/signature -- change if needed.
+  2. Edit the REASONS array in the <script> tag with your real reasons you love her.
   3. Add real photos: put image files in a "photos" folder next to this index.html,
      then replace a <div class="photo">...</div> with:
      <div class="photo"><img src="photos/yourfile.jpg" alt="description"></div>
   4. Trip dates (departure/return) and globe coordinates are near the bottom of the <script> tag.
 ============================================================= -->
 
-<button class="surprise-btn" id="surpriseBtn">a little something</button>
-<div class="surprise-toast" id="surpriseToast">I love you more than every mile between us. See you soon. 🤍</div>
-
 <main>
 
   <section class="hero">
-    <div class="eyebrow">Long distance, short-ish now</div>
+    <div class="eyebrow">for my favorite person, wherever she is</div>
     <h1 class="title">Every day is one day closer</h1>
-    <p class="subtitle">to holding you again, for real this time.</p>
+    <p class="subtitle">to falling asleep next to you instead of just texting you goodnight.</p>
 
     <div class="countdown" id="countdown">
       <div class="box"><span class="num" id="days">00</span><span class="label">Days</span></div>
@@ -407,32 +415,20 @@
   </section>
 
   <section class="block">
-    <div class="eyebrow">Edit with your real memories</div>
-    <h2 class="title" style="font-size:1.3rem;">Our story so far</h2>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="date">The Day We Met</div>
-        <div class="desc">Replace this with how and when you two met.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="date">Our First Date</div>
-        <div class="desc">Replace this with a favorite memory from early on.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="date">July 16, 2026</div>
-        <div class="desc">The day she left for the Philippines.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="date">August 17, 2026</div>
-        <div class="desc">The day she comes home.</div>
-      </div>
+    <div class="eyebrow">tap for another one</div>
+    <h2 class="title" style="font-size:1.3rem;">Reasons I love you</h2>
+    <div class="card reason-card">
+      <div class="reason-heart">🤍</div>
+      <div class="reason-text" id="reasonText">Loading...</div>
+      <button class="reason-btn" id="reasonBtn">another reason</button>
+      <div class="reason-count" id="reasonCount"></div>
     </div>
   </section>
 
   <section class="block">
-    <div class="eyebrow">Swap these for real pictures</div>
+    <div class="eyebrow">swipe through · swap in real photos</div>
     <h2 class="title" style="font-size:1.3rem;">Photos of us</h2>
-    <div class="gallery">
+    <div class="gallery" id="gallery">
       <div class="photo">Add photo 1</div>
       <div class="photo">Add photo 2</div>
       <div class="photo">Add photo 3</div>
@@ -440,6 +436,7 @@
       <div class="photo">Add photo 5</div>
       <div class="photo">Add photo 6</div>
     </div>
+    <div class="gallery-dots" id="galleryDots"></div>
     <p class="footer-note">made with love, patience, and a countdown timer</p>
   </section>
 
@@ -469,7 +466,7 @@
 
   /* ================= stars ================= */
   const starsEl = document.getElementById('stars');
-  for(let i = 0; i < 60; i++){
+  for(let i = 0; i < 55; i++){
     const s = document.createElement('div');
     s.className = 'star';
     const size = 1 + Math.random() * 2;
@@ -481,15 +478,88 @@
     s.style.animationDelay = (Math.random() * 4) + 's';
     starsEl.appendChild(s);
   }
+  for(let i = 0; i < 10; i++){
+    const h = document.createElement('div');
+    h.className = 'heart-star';
+    h.textContent = '♥';
+    h.style.fontSize = (8 + Math.random() * 8) + 'px';
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.top = Math.random() * 100 + 'vh';
+    h.style.animationDuration = (3 + Math.random() * 4) + 's';
+    h.style.animationDelay = (Math.random() * 4) + 's';
+    starsEl.appendChild(h);
+  }
 
-  /* ================= surprise button ================= */
-  const surpriseBtn = document.getElementById('surpriseBtn');
-  const surpriseToast = document.getElementById('surpriseToast');
-  let toastTimer;
-  surpriseBtn.addEventListener('click', () => {
-    surpriseToast.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => surpriseToast.classList.remove('show'), 3200);
+  /* ================= reasons i love you ================= */
+  const REASONS = [
+    "The way you laugh at your own jokes before you even finish telling them.",
+    "You still make the effort to say good morning even with the time difference.",
+    "How you remember the little things I mention once and never bring up again.",
+    "The way you take care of everyone around you without expecting anything back.",
+    "You make even the most ordinary video call feel like the best part of my day.",
+    "How excited you get about the little things - it's contagious.",
+    "You never give up on us, even when the distance is hard.",
+    "Your voice is the thing I miss the most.",
+    "The way you say my name.",
+    "You believe in me even on days I don't believe in myself.",
+    "How patient you are with me, always.",
+    "Simply put - you're my favorite person on this entire planet."
+  ];
+  function shuffled(arr){
+    const a = arr.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  let reasonOrder = shuffled(REASONS);
+  let reasonIndex = 0;
+  const reasonTextEl = document.getElementById('reasonText');
+  const reasonCountEl = document.getElementById('reasonCount');
+  function showReason(){
+    reasonTextEl.textContent = reasonOrder[reasonIndex];
+    reasonCountEl.textContent = `reason ${reasonIndex + 1} of ${REASONS.length}`;
+  }
+  showReason();
+  document.getElementById('reasonBtn').addEventListener('click', () => {
+    reasonIndex++;
+    if(reasonIndex >= reasonOrder.length){
+      reasonOrder = shuffled(REASONS);
+      reasonIndex = 0;
+    }
+    showReason();
+  });
+
+  /* ================= gallery dots ================= */
+  const galleryEl = document.getElementById('gallery');
+  const galleryDotsEl = document.getElementById('galleryDots');
+  const photoEls = [...galleryEl.querySelectorAll('.photo')];
+  photoEls.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+    d.addEventListener('click', () => {
+      galleryEl.scrollTo({ left: photoEls[i].offsetLeft - (galleryEl.clientWidth - photoEls[i].clientWidth) / 2, behavior: 'smooth' });
+    });
+    galleryDotsEl.appendChild(d);
+  });
+  const galleryDotEls = [...galleryDotsEl.children];
+  let galleryTicking = false;
+  galleryEl.addEventListener('scroll', () => {
+    if(galleryTicking) return;
+    galleryTicking = true;
+    requestAnimationFrame(() => {
+      const center = galleryEl.scrollLeft + galleryEl.clientWidth / 2;
+      let closest = 0, closestDist = Infinity;
+      photoEls.forEach((p, i) => {
+        const pCenter = p.offsetLeft + p.clientWidth / 2;
+        const dist = Math.abs(pCenter - center);
+        if(dist < closestDist){ closestDist = dist; closest = i; }
+      });
+      galleryDotEls.forEach((d, i) => d.classList.toggle('active', i === closest));
+      galleryTicking = false;
+    });
   });
 
   /* ================= interactive earth globe ================= */
