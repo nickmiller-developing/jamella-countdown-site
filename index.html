@@ -105,31 +105,55 @@
   .hero{ display: flex; flex-direction: column; align-items: center; gap: 22px; }
 
   /* ---------- countdown ---------- */
+  .countdown-wrap{
+    position: relative;
+  }
+  .countdown-wrap::before{
+    content: "";
+    position: absolute;
+    inset: -24px;
+    background: radial-gradient(circle, rgba(242,169,201,0.28), rgba(167,139,250,0.14) 60%, transparent 75%);
+    filter: blur(18px);
+    z-index: -1;
+    animation: glow-pulse 3.6s ease-in-out infinite;
+  }
   .countdown{
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
     justify-content: center;
+    animation: heartbeat 2.6s ease-in-out infinite;
+  }
+  @keyframes heartbeat{
+    0%, 100%{ transform: scale(1); }
+    15%{ transform: scale(1.035); }
+    30%{ transform: scale(1); }
+    45%{ transform: scale(1.02); }
+    60%{ transform: scale(1); }
+  }
+  @keyframes glow-pulse{
+    0%, 100%{ opacity: 0.55; transform: scale(1); }
+    50%{ opacity: 1; transform: scale(1.08); }
   }
   .countdown .box{
     background: var(--card);
-    border: 1px solid var(--card-line);
-    border-radius: 16px;
+    border: 1px solid rgba(242,169,201,0.28);
+    border-radius: 20px;
     padding: 14px 12px;
     min-width: 68px;
     text-align: center;
     backdrop-filter: blur(6px);
+    box-shadow: 0 0 22px rgba(242,169,201,0.1);
   }
   .countdown .num{
     display: block;
     font-size: clamp(1.4rem, 5vw, 1.9rem);
     font-weight: 800;
-    color: var(--sky);
+    color: var(--rose);
   }
   .countdown .label{
-    font-size: 0.66rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 0.68rem;
+    letter-spacing: 0.5px;
     color: var(--ink-soft);
   }
   .arrived-msg{
@@ -153,6 +177,16 @@
     width: min(88vw, 380px);
     aspect-ratio: 1/1;
     touch-action: none;
+  }
+  .globe-wrap::before{
+    content: "";
+    position: absolute;
+    inset: -18px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(242,169,201,0.22), rgba(167,139,250,0.16) 55%, transparent 72%);
+    filter: blur(22px);
+    z-index: -1;
+    animation: glow-pulse 4.4s ease-in-out infinite;
   }
   canvas#globe{
     width: 100%;
@@ -370,24 +404,26 @@
     <h1 class="title">Every day is one day closer</h1>
     <p class="subtitle">to falling asleep next to you instead of just texting you goodnight.</p>
 
-    <div class="countdown" id="countdown">
-      <div class="box"><span class="num" id="days">00</span><span class="label">Days</span></div>
-      <div class="box"><span class="num" id="hours">00</span><span class="label">Hours</span></div>
-      <div class="box"><span class="num" id="minutes">00</span><span class="label">Minutes</span></div>
-      <div class="box"><span class="num" id="seconds">00</span><span class="label">Seconds</span></div>
+    <div class="countdown-wrap">
+      <div class="countdown" id="countdown">
+        <div class="box"><span class="num" id="days">00</span><span class="label">days</span></div>
+        <div class="box"><span class="num" id="hours">00</span><span class="label">hours</span></div>
+        <div class="box"><span class="num" id="minutes">00</span><span class="label">minutes</span></div>
+        <div class="box"><span class="num" id="seconds">00</span><span class="label">seconds</span></div>
+      </div>
     </div>
-    <div class="arrived-msg" id="arrivedMsg">She's home. Welcome back, my love.</div>
+    <div class="arrived-msg" id="arrivedMsg">She's home. Welcome back, my love. 🤍</div>
 
     <div class="globe-block">
       <div class="globe-wrap">
         <canvas id="globe"></canvas>
         <div class="globe-loading" id="globeLoading">loading the globe…</div>
       </div>
-      <p class="globe-hint">drag to rotate</p>
+      <p class="globe-hint">give our little world a spin 🌏</p>
 
       <div class="globe-legend">
-        <div class="row"><span class="pin-dot you"></span> Toronto, Canada — you are here</div>
-        <div class="row"><span class="pin-dot her"></span> Angadanan, Isabela, PH — she is here</div>
+        <div class="row"><span class="pin-dot you"></span> 🩵 me, missing you from Toronto</div>
+        <div class="row"><span class="pin-dot her"></span> 💜 you, holding my heart in Angadanan</div>
       </div>
 
       <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
@@ -587,7 +623,7 @@
       return R * 2 * Math.atan2(Math.sqrt(s), Math.sqrt(1-s));
     }
     document.getElementById('distanceLabel').textContent =
-      Math.round(distanceKm(TORONTO, ANGADANAN)).toLocaleString() + ' km apart, but every day is one day closer.';
+      Math.round(distanceKm(TORONTO, ANGADANAN)).toLocaleString() + ' km apart, but my heart doesn\'t know the distance.';
 
     function tripProgress(){
       const t = (Date.now() - TRIP_START.getTime()) / (TRIP_END.getTime() - TRIP_START.getTime());
@@ -600,8 +636,8 @@
       document.getElementById('progressFill').style.width = (p * 100) + '%';
       document.getElementById('progressLabel').textContent =
         p >= 1
-          ? "She's home!"
-          : `day ${elapsedDays} of ${totalDays} · ${Math.round(p * 100)}% of the way home`;
+          ? "home, safe in my arms 🤍"
+          : `${Math.round(p * 100)}% of the way back into my arms (day ${elapsedDays} of ${totalDays})`;
     }
     updateProgressUI();
     setInterval(updateProgressUI, 60000);
