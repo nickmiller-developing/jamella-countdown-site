@@ -511,7 +511,7 @@
 
 <script>
   /* ================= countdown ================= */
-  const targetDate = new Date("2026-08-17T00:00:00");
+  const targetDate = new Date("2026-08-17T00:00:00-04:00");
   function updateCountdown(){
     const diff = targetDate - new Date();
     if(diff <= 0){
@@ -642,8 +642,8 @@
     const CANADA_ID = "124";
     const PH_ID = "608";
 
-    const TRIP_START = new Date("2026-07-16T00:00:00");
-    const TRIP_END = new Date("2026-08-17T00:00:00");
+    const TRIP_START = new Date("2026-07-16T00:00:00-04:00");
+    const TRIP_END = new Date("2026-08-17T00:00:00-04:00");
 
     function toRad(d){ return d * Math.PI / 180; }
     function distanceKm(a, b){
