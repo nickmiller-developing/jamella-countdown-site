@@ -224,6 +224,12 @@
     align-items: center;
     gap: 8px;
   }
+  .local-time{
+    margin-left: auto;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
   .pin-dot{
     width: 10px;
     height: 10px;
@@ -442,8 +448,8 @@
       <p class="globe-hint">give our little world a spin 🌏</p>
 
       <div class="globe-legend">
-        <div class="row"><span class="pin-dot you"></span> 🩵 me, missing you from Toronto</div>
-        <div class="row"><span class="pin-dot her"></span> 💜 you, holding my heart in Angadanan</div>
+        <div class="row"><span class="pin-dot you"></span> 🩵 me, missing you from Toronto <span class="local-time" id="timeYou"></span></div>
+        <div class="row"><span class="pin-dot her"></span> 💜 you, holding my heart in Angadanan <span class="local-time" id="timeHer"></span></div>
       </div>
 
       <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
@@ -530,6 +536,20 @@
   }
   updateCountdown();
   setInterval(updateCountdown, 1000);
+
+  /* ================= local clocks ================= */
+  const timeFormatterYou = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Toronto", hour: "numeric", minute: "2-digit"
+  });
+  const timeFormatterHer = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Manila", hour: "numeric", minute: "2-digit"
+  });
+  function updateClocks(){
+    document.getElementById("timeYou").textContent = timeFormatterYou.format(new Date());
+    document.getElementById("timeHer").textContent = timeFormatterHer.format(new Date());
+  }
+  updateClocks();
+  setInterval(updateClocks, 1000);
 
   /* ================= stars ================= */
   const starsEl = document.getElementById('stars');
