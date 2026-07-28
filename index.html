@@ -379,6 +379,26 @@
     color: var(--ink-soft);
     text-align: center;
   }
+
+  /* ---------- way back when ---------- */
+  .throwback{
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    max-width: 480px;
+  }
+  .throwback .photo{
+    flex: 1 1 50%;
+    aspect-ratio: 3/4;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  .throwback .photo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 </style>
 </head>
 <body>
@@ -452,6 +472,14 @@
   </section>
 
   <section class="block">
+    <div class="eyebrow">us, way back when</div>
+    <div class="throwback">
+      <div class="photo"><img src="photos/img_4265.jpg" alt="Us at golden hour"></div>
+      <div class="photo"><img src="photos/img_3930.jpg" alt="Us at night on the court"></div>
+    </div>
+  </section>
+
+  <section class="block">
     <div class="eyebrow">tap for another one</div>
     <h2 class="title" style="font-size:1.3rem;">Reasons I love you</h2>
     <div class="card reason-card">
@@ -466,12 +494,14 @@
     <div class="eyebrow">swipe through · swap in real photos</div>
     <h2 class="title" style="font-size:1.3rem;">Photos of us</h2>
     <div class="gallery" id="gallery">
-      <div class="photo">Add photo 1</div>
-      <div class="photo">Add photo 2</div>
-      <div class="photo">Add photo 3</div>
-      <div class="photo">Add photo 4</div>
-      <div class="photo">Add photo 5</div>
-      <div class="photo">Add photo 6</div>
+      <div class="photo"><img src="photos/img_0721.jpg" alt="How it all started"></div>
+      <div class="photo"><img src="photos/img_4277.jpg" alt="How it all started, his side"></div>
+      <div class="photo"><img src="photos/img_2730.jpg" alt="Us in a window reflection"></div>
+      <div class="photo"><img src="photos/img_4265.jpg" alt="Us at golden hour"></div>
+      <div class="photo"><img src="photos/img_3930.jpg" alt="Us at night on the court"></div>
+      <div class="photo"><img src="photos/img_3935.jpg" alt="A kiss on the cheek at night"></div>
+      <div class="photo"><img src="photos/img_4307.jpg" alt="Close up at night"></div>
+      <div class="photo"><img src="photos/img_4321.jpg" alt="Us dressed up at night"></div>
     </div>
     <div class="gallery-dots" id="galleryDots"></div>
     <p class="footer-note">made with love, patience, and a countdown timer</p>
